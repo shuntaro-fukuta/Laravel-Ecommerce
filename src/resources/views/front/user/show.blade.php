@@ -35,9 +35,17 @@
       </div>
     </div>
 
-    <button class="btn btn-secondary mx-auto mt-4 mb-3">
-      <a class="plain-link" href="{{ route('user.edit', $user->id) }}">Edit</a>
-    </button>
+    <div class="mx-auto mt-4 mb-3">
+      <a class="plain-link" href="{{ route('user.edit', $user->id) }}">
+        <button class="btn btn-secondary">
+          編集
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div class="text-center mt-3">
+    <a class="h5" href="{{ route('user.withdraw', $user) }}">退会する</a>
   </div>
 </div>
 
