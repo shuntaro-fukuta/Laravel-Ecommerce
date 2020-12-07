@@ -28,5 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/user/{user}/edit', [App\Http\Controllers\Front\UserController::class, 'edit'])->name('user.edit');
         Route::post('/user/{user}/edit', [App\Http\Controllers\Front\UserController::class, 'update']);
+
+        Route::get('/user/{user}/withdraw', 'App\Http\Controllers\Front\UserController@confirmWithdraw')->name('user.withdraw');
+        Route::delete('/user/{user}/withdraw', 'App\Http\Controllers\Front\UserController@withdraw');
     });
+    Route::get('/user/withdrawal/complete', 'App\Http\Controllers\Front\UserController@completeWithdrawal')->name('user.withdrawal.complete');
 });

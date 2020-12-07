@@ -72,9 +72,11 @@
     </form>
 
     <div class="row mx-auto my-2">
-      <button class="btn btn-danger">
-        <a class="plain-link" href="{{ route('user.show', $user->id) }}">戻る</a>
-      </button>
+      <a class="plain-link" href="{{ route('user.show', $user->id) }}">
+        <button class="btn btn-danger">
+          戻る
+        </button>
+      </a>
     </div>
   </div>
 </div>
