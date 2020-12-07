@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyPage</title>
-</head>
-<body>
+@extends('front.layouts.base')
+
+@section('title', 'MyPage')
+
+@section('content')
 <table border="1">
   <tr>
     <td style="background-color: gray;">name</td>
@@ -27,5 +24,6 @@
     <td>{{ $user->phone_number }}</td>
   </tr>
 </table>
-</body>
-</html>
+
+<a href="{{ route('user.edit', $user->id) }}">Edit</a>
+@stop
