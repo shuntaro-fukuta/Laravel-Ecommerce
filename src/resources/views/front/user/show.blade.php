@@ -1,29 +1,44 @@
 @extends('front.layouts.base')
 
-@section('title', 'MyPage')
+@section('title', '会員情報')
 
 @section('content')
-<table border="1">
-  <tr>
-    <td style="background-color: gray;">name</td>
-    <td>{{ $user->name }}</td>
-  </tr>
+<div class="container">
+  <h2 class="text-center my-3">会員情報</h2>
 
-  <tr>
-    <td style="background-color: gray;">email</td>
-    <td>{{ $user->email }}</td>
-  </tr>
+  <div class="card col-6 mx-auto mt-2">
+    <div class="row mt-3">
+      <div class="col-8 mx-auto d-flex my-2 font-weight-bold">
+        <div class="col-5">氏名</div>
+        <div>{{ $user->name }}</div>
+      </div>
+    </div>
 
-  <tr>
-    <td style="background-color: gray;">address</td>
-    <td>{{ $user->address }}</td>
-  </tr>
+    <div class="row">
+      <div class="col-8 mx-auto d-flex my-2 font-weight-bold">
+        <div class="col-5">メールアドレス</div>
+        <div>{{ $user->email }}</div>
+      </div>
+    </div>
 
-  <tr>
-    <td style="background-color: gray;">phone_number</td>
-    <td>{{ $user->phone_number }}</td>
-  </tr>
-</table>
+    <div class="row">
+      <div class="col-8 mx-auto d-flex my-2 font-weight-bold">
+        <div class="col-5">住所</div>
+        <div>{{ $user->address }}</div>
+      </div>
+    </div>
 
-<a href="{{ route('user.edit', $user->id) }}">Edit</a>
+    <div class="row">
+      <div class="col-8 mx-auto d-flex my-2 font-weight-bold">
+        <div class="col-5">電話番号</div>
+        <div>{{ $user->phone_number }}</div>
+      </div>
+    </div>
+
+    <button class="btn btn-secondary mx-auto mt-4 mb-3">
+      <a class="plain-link" href="{{ route('user.edit', $user->id) }}">Edit</a>
+    </button>
+  </div>
+</div>
+
 @stop
