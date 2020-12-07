@@ -1,7 +1,7 @@
 FROM mysql:8.0
 
-ENV MYSQL_DATABASE=laravel_eccomerce \
-    MYSQL_USER=laravel_eccomerce \
+ENV MYSQL_DATABASE=laravel_ecommerce \
+    MYSQL_USER=laravel_ecommerce \
     MYSQL_PASSWORD=password \
     MYSQL_ROOT_PASSWORD=root \
     TZ=Aziz/Tokyo
