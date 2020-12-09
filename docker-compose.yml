@@ -20,9 +20,12 @@ services:
     working_dir: /work
 
   db:
-    build: ./docker/mysql
+    build: ./docker/mysql/db
     volumes:
       - db-store:/var/lib/mysql
+
+  test-db:
+    build: ./docker/mysql/test
 
 volumes:
   db-store:
