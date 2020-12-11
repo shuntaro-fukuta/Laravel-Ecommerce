@@ -41,7 +41,7 @@ class AuthTest extends TestCase
 
         $response
             ->assertStatus(302)
-            ->assertRedirect('/home');
+            ->assertRedirect('/top');
     }
 
     /**
@@ -68,7 +68,7 @@ class AuthTest extends TestCase
 
         $response
             ->assertStatus(302)
-            ->assertRedirect('/home');
+            ->assertRedirect('/top');
 
         $this->assertAuthenticatedAs($user);
     }
