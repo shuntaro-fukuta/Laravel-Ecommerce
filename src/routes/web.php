@@ -14,5 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('front.top');
+});
+
+Auth::routes();
+
+Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name('top');
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::group(['middleware' => 'identification'], function () {
+        Route::get('/user/{user}', [App\Http\Controllers\Front\UserController::class, 'show'])->name('user.show');
+
+        Route::get('/user/{user}/edit', [App\Http\Controllers\Front\UserController::class, 'edit'])->name('user.edit');
+        Route::post('/user/{user}/edit', [App\Http\Controllers\Front\UserController::class, 'update']);
+
+        Route::get('/user/{user}/withdraw', 'App\Http\Controllers\Front\UserController@confirmWithdraw')->name('user.withdraw');
+        Route::delete('/user/{user}/withdraw', 'App\Http\Controllers\Front\UserController@withdraw');
+    });
+    Route::get('/user/withdrawal/complete', 'App\Http\Controllers\Front\UserController@completeWithdrawal')->name('user.withdrawal.complete');
 });
