@@ -8,7 +8,7 @@
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-  <style>body { background-color: tomato; }</style>
+  <style>body { background-color: #efefef; }</style>
 </head>
 <body>
 @include('back.layouts.header')
