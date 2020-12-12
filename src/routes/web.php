@@ -17,7 +17,12 @@ Route::get('/', function () {
     return view('front.top');
 });
 
-Auth::routes();
+Route::get('/login', 'App\Http\Controllers\Front\Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'App\Http\Controllers\Front\Auth\LoginController@login');
+Route::post('/logout', 'App\Http\Controllers\Front\Auth\LoginController@logout')->name('logout');
+
+Route::get('/register', 'App\Http\Controllers\Front\Auth\RegisterController@showRegistrationForm')->name('register');
+Route::post('/register', 'App\Http\Controllers\Front\Auth\RegisterController@register');
 
 Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name('top');
 

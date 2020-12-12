@@ -6,7 +6,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-use App\Models\User;
+use App\Models\Front\User;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UserTest extends TestCase
 {
@@ -49,7 +50,6 @@ class UserTest extends TestCase
             'email' => 'updated@example.com',
             'address' => 'updated',
             'phone_number' => '99999999999',
-            'password' => 'updated!!!',
         ]);
 
         $updatedUser = User::find($this->loggedInUser->id);
@@ -58,7 +58,6 @@ class UserTest extends TestCase
         $this->assertEquals($updatedUser->email, 'updated@example.com');
         $this->assertEquals($updatedUser->address, 'updated');
         $this->assertEquals($updatedUser->phone_number, '99999999999');
-        $this->assertEquals($updatedUser->password, 'updated!!!');
 
         $response->assertStatus(302);
     }
