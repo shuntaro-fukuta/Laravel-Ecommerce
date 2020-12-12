@@ -51,6 +51,10 @@ Route::prefix('back')->group(function () {
             return view('back.top');
         })->name('back.top');
 
+        Route::get('/operator/menu', 'App\Http\Controllers\Back\OperatorController@menu')->name('back.operator.menu');
+
+        Route::get('/operator/search', 'App\Http\Controllers\Back\OperatorController@search')->name('back.operator.search');
+
         Route::post('/logout', 'App\Http\Controllers\Back\Auth\LoginController@logout')->name('back.operator.logout');
     });
 });
