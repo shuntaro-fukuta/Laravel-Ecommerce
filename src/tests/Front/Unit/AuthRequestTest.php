@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\front;
 
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\Front\UpdateUserRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Validator;
