@@ -39,3 +39,18 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::get('/user/withdrawal/complete', 'App\Http\Controllers\Front\UserController@completeWithdrawal')->name('user.withdrawal.complete');
 });
+
+Route::prefix('back')->group(function () {
+    Route::middleware('guest:operator')->group(function () {
+        Route::get('/login', 'App\Http\Controllers\Back\Auth\LoginController@showLoginForm')->name('back.operator.login');
+        Route::post('/login', 'App\Http\Controllers\Back\Auth\LoginController@login');
+    });
+
+    Route::middleware('auth:operator')->group(function () {
+        Route::get('/', function () {
+            return view('back.top');
+        })->name('back.top');
+
+        Route::post('/logout', 'App\Http\Controllers\Back\Auth\LoginController@logout')->name('back.operator.logout');
+    });
+});
