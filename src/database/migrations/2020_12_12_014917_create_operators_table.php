@@ -15,6 +15,9 @@ class CreateOperatorsTable extends Migration
     {
         Schema::create('operators', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }
