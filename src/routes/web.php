@@ -55,6 +55,8 @@ Route::prefix('back')->group(function () {
 
         Route::get('/operator/search', 'App\Http\Controllers\Back\OperatorController@search')->name('back.operator.search');
 
+        Route::get('/operator/{operator}', 'App\Http\Controllers\Back\OperatorController@show')->name('back.operator.show');
+
         Route::post('/logout', 'App\Http\Controllers\Back\Auth\LoginController@logout')->name('back.operator.logout');
     });
 });
