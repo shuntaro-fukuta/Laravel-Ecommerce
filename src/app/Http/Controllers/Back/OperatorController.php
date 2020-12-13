@@ -29,4 +29,9 @@ class OperatorController extends Controller
 
         return view('back.operator.search', compact('operators', 'name', 'email'));
     }
+
+    public function show(Operator $operator)
+    {
+        return view('back.operator.show', ['operator' => $operator]);
+    }
 }

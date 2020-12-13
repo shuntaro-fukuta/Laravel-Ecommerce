@@ -33,7 +33,7 @@
           <li class="nav-item active">
             <a class="nav-link" href="{{ route('back.operator.menu') }}">
               <i class="material-icons">person</i>
-              <p>会員管理</p>
+              <p>担当者管理</p>
             </a>
           </li>
         </ul>

@@ -13,21 +13,15 @@
               <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
-                    <th>
-                      ID
-                    </th>
-                    <th>
-                      Name
-                    </th>
-                    <th>
-                      Email
-                    </th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
                   </thead>
                   <tbody>
                     @forelse ($operators as $operator)
                       <tr>
                         <td>{{ $operator->id }}</td>
-                        <td><a href="">{{ $operator->name }}</a></td>
+                        <td><a href="{{ route('back.operator.show', $operator) }}">{{ $operator->name }}</a></td>
                         <td>{{ $operator->email }}</td>
                       </tr>
                     @empty
