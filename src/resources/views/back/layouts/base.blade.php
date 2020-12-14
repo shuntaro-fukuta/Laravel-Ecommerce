@@ -36,6 +36,12 @@
               <p>担当者管理</p>
             </a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ route('back.user.menu') }}">
+              <i class="material-icons">person</i>
+              <p>ユーザー管理</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
