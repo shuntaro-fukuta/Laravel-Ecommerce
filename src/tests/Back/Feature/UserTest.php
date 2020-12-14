@@ -13,6 +13,8 @@ class UserTest extends TestCase
 {
     protected $loggedInOperator;
 
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,7 +27,7 @@ class UserTest extends TestCase
      */
     public function shouldDisplayUserMenuPage()
     {
-        $response = $this->get('/back/user');
+        $response = $this->get('/back/user/menu');
 
         $response->assertStatus(200);
     }
@@ -66,4 +68,40 @@ class UserTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * @test
+     */
+    public function shouldDisplayUserEditPage()
+    {
+        $user = User::factory(1)->create()->first();
+
+        $response = $this->get('/back/user/' . $user->id . '/edit');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldUpdateUser()
+    {
+        $user = User::factory(1)->create()->first();
+        $response = $this->post('/back/user/' . $user->id . '/edit', [
+            'name' => 'updated',
+            'email' => 'updated@example.com',
+            'address' => 'updated',
+            'phone_number' => '99999999999',
+        ]);
+
+        $updatedUser = User::find($user->id);
+
+        $this->assertEquals($updatedUser->name, 'updated');
+        $this->assertEquals($updatedUser->email, 'updated@example.com');
+        $this->assertEquals($updatedUser->address, 'updated');
+        $this->assertEquals($updatedUser->phone_number, '99999999999');
+
+        $response->assertStatus(302);
+    }
+
 }

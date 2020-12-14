@@ -33,8 +33,12 @@
       </tr>
     </table>
 
-    <a href="{{ url()->previous() }}">
+    <a href="{{ route('back.user.index') }}">
       <button class="btn btn-dark mb-3">戻る</button>
+    </a>
+
+    <a href="{{ route('back.user.edit', $user) }}">
+      <button class="btn btn-info mb-3">編集</button>
     </a>
   </div>
 </div>
