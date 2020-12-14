@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Front\User;
+use App\Models\Back\Operator;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,5 +24,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::factory(10)->create();
+
+        Operator::create([
+            'name' => 'fukuta',
+            'email' => 'fukuta@example.com',
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+        ]);
+        Operator::factory(100)->create();
     }
 }
