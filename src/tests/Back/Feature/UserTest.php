@@ -54,4 +54,16 @@ class UserTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * @test
+     */
+    public function shouldDisplayUserShowPage()
+    {
+        $user = User::factory(1)->create()->first();
+
+        $response = $this->get('back/user/' . $user->id);
+
+        $response->assertStatus(200);
+    }
 }
