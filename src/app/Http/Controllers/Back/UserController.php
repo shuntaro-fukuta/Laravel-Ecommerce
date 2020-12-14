@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Front\User;
+use App\Http\Requests\Front\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -35,5 +36,17 @@ class UserController extends Controller
     public function show(User $user)
     {
         return view('back.user.show', compact('user'));
+    }
+
+    public function edit(User $user)
+    {
+        return view('back.user.edit', compact('user'));
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $user->fill($request->all())->save();
+
+        return redirect(route('back.user.show', $user));
     }
 }
