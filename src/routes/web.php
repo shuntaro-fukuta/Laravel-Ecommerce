@@ -65,6 +65,7 @@ Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 
         Route::group(['middleware' => 'auth:operator'], function () {
             Route::get('/', 'UserController@menu')->name('menu');
             Route::get('/index', 'UserController@index')->name('index');
+            Route::get('/{user}', 'UserController@show')->name('show');
         });
     });
 });

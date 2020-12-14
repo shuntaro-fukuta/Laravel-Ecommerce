@@ -31,4 +31,9 @@ class UserController extends Controller
 
         return view('back.user.index', compact('users', 'name', 'email', 'phone_number', 'address'));
     }
+
+    public function show(User $user)
+    {
+        return view('back.user.show', compact('user'));
+    }
 }
