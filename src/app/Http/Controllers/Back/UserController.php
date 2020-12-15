@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Front\User;
 use App\Http\Requests\Front\UpdateUserRequest;
+use App\Http\Requests\Back\CreateUserRequest;
 
 class UserController extends Controller
 {
@@ -36,6 +37,18 @@ class UserController extends Controller
     public function show(User $user)
     {
         return view('back.user.show', compact('user'));
+    }
+
+    public function create()
+    {
+        return view('back.user.create');
+    }
+
+    public function store(CreateUserRequest $request)
+    {
+        $user = User::create($request->all());
+
+        return redirect(route('back.user.show', $user));
     }
 
     public function edit(User $user)

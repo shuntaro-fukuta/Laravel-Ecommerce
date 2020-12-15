@@ -72,11 +72,9 @@ class UserTest extends TestCase
     /**
      * @test
      */
-    public function shouldDisplayUserEditPage()
+    public function shouldDisplayUserCreatePage()
     {
-        $user = User::factory(1)->create()->first();
-
-        $response = $this->get('/back/user/' . $user->id . '/edit');
+        $response = $this->get('/back/user/create');
 
         $response->assertStatus(200);
     }
@@ -84,24 +82,50 @@ class UserTest extends TestCase
     /**
      * @test
      */
-    public function shouldUpdateUser()
+    public function shouldCreateWithValidParameters()
     {
-        $user = User::factory(1)->create()->first();
-        $response = $this->post('/back/user/' . $user->id . '/edit', [
-            'name' => 'updated',
-            'email' => 'updated@example.com',
-            'address' => 'updated',
-            'phone_number' => '99999999999',
+        $response = $this->post('/back/user/create', [
+            'name' => 'test',
+            'email' => 'test@example.com',
+            'phone_number' => '08012341234',
+            'address' => 'test',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
 
-        $updatedUser = User::find($user->id);
+        $createdUser = User::all()->last();
 
-        $this->assertEquals($updatedUser->name, 'updated');
-        $this->assertEquals($updatedUser->email, 'updated@example.com');
-        $this->assertEquals($updatedUser->address, 'updated');
-        $this->assertEquals($updatedUser->phone_number, '99999999999');
+        $response->assertStatus(302)
+                 ->assertRedirect('/back/user/' . $createdUser->id);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotCreateUserWithInvalidParameters()
+    {
+        $response = $this->post('/back/user/create', [
+            'name' => str_repeat('a', 31),
+            'email' => 'test',
+            'phone_number' => 'test',
+            'address' => '',
+            'password' => '',
+            'password_confirmation' => '',
+        ]);
 
         $response->assertStatus(302);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldDisplayUserEditPage()
+    {
+        $user = User::factory(1)->create()->first();
+
+        $response = $this->get('/back/user/' . $user->id . '/edit');
+
+        $response->assertStatus(200);
     }
 
 }
