@@ -42,6 +42,12 @@
               <p>ユーザー管理</p>
             </a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ route('back.makers.index') }}">
+              <i class="material-icons">build</i>
+              <p>メーカー管理</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
