@@ -15,6 +15,14 @@
             </button>
           </a>
         </div>
+
+        <div class="col-md-6">
+          <a class="text-white" href="{{ route('back.user.create') }}">
+            <button class="btn btn-dark btn-block">
+              ユーザー登録
+            </button>
+          </a>
+        </div>
       </div>
     </div>
   </div>
