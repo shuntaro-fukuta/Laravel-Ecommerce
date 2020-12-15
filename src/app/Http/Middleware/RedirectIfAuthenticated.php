@@ -21,9 +21,16 @@ class RedirectIfAuthenticated
     {
         $guards = empty($guards) ? [null] : $guards;
 
+        $routeNames = [
+            'user' => 'top',
+            'operator' => 'back.top',
+        ];
+
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                $routeName = (isset($routeNames[$guard])) ? $routeNames[$guard] : 'top';
+
+                return redirect(route($routeName));
             }
         }
 
