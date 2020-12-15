@@ -9,6 +9,11 @@ use App\Models\Back\Maker;
 
 class MakerController extends Controller
 {
+    public function menu()
+    {
+        return view('back.maker.menu');
+    }
+
     public function index(Request $request)
     {
         $makers = Maker::all();
