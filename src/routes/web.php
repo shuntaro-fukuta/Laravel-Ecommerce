@@ -42,20 +42,35 @@ Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
     });
 });
 
-Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 'as' => 'back.operator.'], function () {
-    Route::group(['guest:operator', 'namespace' => 'Auth\\'], function () {
-        Route::get('/login', 'LoginController@showLoginForm')->name('login');
-        Route::post('/login', 'LoginController@login');
+Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 'as' => 'back.'], function () {
+    Route::group(['as' => 'operator.'], function () {
+        Route::group(['guest:operator', 'namespace' => 'Auth\\'], function () {
+            Route::get('/login', 'LoginController@showLoginForm')->name('login');
+            Route::post('/login', 'LoginController@login');
+        });
+
+        Route::group(['middleware' => 'auth:operator'], function () {
+            Route::get('/', function () { return view('back.top'); })->name('top');
+
+            Route::group(['prefix' => 'operator'], function () {
+                Route::get('/menu', 'OperatorController@menu')->name('menu');
+                Route::get('/index', 'OperatorController@index')->name('index');
+                Route::get('/{operator}', 'OperatorController@show')->name('show');
+                Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+            });
+        });
     });
 
-    Route::group(['middleware' => 'auth:operator'], function () {
-        Route::get('/', function () { return view('back.top'); })->name('top');
-
-        Route::group(['prefix' => 'operator'], function () {
-            Route::get('/menu', 'OperatorController@menu')->name('menu');
-            Route::get('/search', 'OperatorController@search')->name('search');
-            Route::get('/{operator}', 'OperatorController@show')->name('show');
-            Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::group(['middleware' => 'auth:operator'], function () {
+            Route::get('/menu', 'UserController@menu')->name('menu');
+            Route::get('/index', 'UserController@index')->name('index');
+            Route::get('/create', 'UserController@create')->name('create');
+            Route::post('/create', 'UserController@store');
+            Route::get('/{user}', 'UserController@show')->name('show');
+            Route::get('/{user}/edit', 'UserController@edit')->name('edit');
+            Route::post('/{user}/edit', 'UserController@update');
+            Route::delete('/{user}/destroy', 'UserController@destroy')->name('destroy');
         });
     });
 });
