@@ -33,13 +33,21 @@
       </tr>
     </table>
 
+    <div class="row text-center">
+      <a href="{{ route('back.user.edit', $user) }}">
+        <button class="btn btn-info mb-3">編集</button>
+      </a>
+
+      <form action="{{ route('back.user.destroy', $user) }}" method="post">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-danger mb-3">削除</button>
+      </form>
+    </div>
     <a href="{{ route('back.user.index') }}">
       <button class="btn btn-dark mb-3">戻る</button>
     </a>
 
-    <a href="{{ route('back.user.edit', $user) }}">
-      <button class="btn btn-info mb-3">編集</button>
-    </a>
   </div>
 </div>
 @endsection
