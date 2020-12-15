@@ -48,7 +48,7 @@
             @foreach ($makers as $maker)
               <tr>
                 <td>{{ $maker->id }}</td>
-                <td><a href="{{-- route('back.maker.show', $maker) --}}">{{ $maker->name }}</a></td>
+                <td><a href="{{ route('back.makers.show', $maker) }}">{{ $maker->name }}</a></td>
                 <td>{{ $maker->email }}</td>
                 <td>{{ $maker->phone_number }}</td>
                 <td>{{ $maker->address }}</td>
@@ -56,6 +56,7 @@
             @endforeach
           </tbody>
         </table>
+        {{ $makers->appends(request()->input())->links('pagination::bootstrap-4') }}
       </div>
     </div>
   </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Back\Maker;
+use App\Http\Requests\Back\CreateMakerRequest;
 
 class MakerController extends Controller
 {
@@ -32,5 +33,22 @@ class MakerController extends Controller
         $makers = $query->paginate(10);
 
         return view('back.maker.index', compact('makers', 'name', 'email', 'phone_number', 'address'));
+    }
+
+    public function create()
+    {
+        return view('back.maker.create');
+    }
+
+    public function store(CreateMakerRequest $request)
+    {
+        $maker = Maker::create($request->all());
+
+        return redirect(route('back.makers.show', $maker));
+    }
+
+    public function show(Maker $maker)
+    {
+        return view('back.maker.show', compact('maker'));
     }
 }
