@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\front;
+namespace Tests\front\Unit;
 
 use App\Http\Requests\Front\UpdateUserRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
