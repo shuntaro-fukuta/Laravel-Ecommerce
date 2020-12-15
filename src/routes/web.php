@@ -73,4 +73,6 @@ Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 
             Route::delete('/{user}/destroy', 'UserController@destroy')->name('destroy');
         });
     });
+
+    Route::resource('makers', 'MakerController');
 });
