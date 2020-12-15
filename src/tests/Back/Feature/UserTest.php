@@ -128,4 +128,17 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * @test
+     */
+    public function shouldDeleteUser()
+    {
+        $user = User::factory(1)->create()->first();
+
+        $response = $this->delete('/back/user/' . $user->id . '/destroy');
+
+        $response->assertStatus(302)
+                 ->assertRedirect('/back/user/index');
+    }
+
 }

@@ -62,4 +62,12 @@ class UserController extends Controller
 
         return redirect(route('back.user.show', $user));
     }
+
+    public function destroy(User $user)
+    {
+        // TODO: 論理削除
+        User::destroy($user->id);
+
+        return redirect(route('back.user.index'));
+    }
 }

@@ -70,6 +70,7 @@ Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 
             Route::get('/{user}', 'UserController@show')->name('show');
             Route::get('/{user}/edit', 'UserController@edit')->name('edit');
             Route::post('/{user}/edit', 'UserController@update');
+            Route::delete('/{user}/destroy', 'UserController@destroy')->name('destroy');
         });
     });
 });
