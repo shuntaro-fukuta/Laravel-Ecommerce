@@ -75,4 +75,5 @@ Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 
     });
 
     Route::resource('makers', 'MakerController');
+    Route::get('/maker/menu', 'MakerController@menu')->name('makers.menu');
 });
