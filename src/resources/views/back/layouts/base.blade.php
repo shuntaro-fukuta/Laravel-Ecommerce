@@ -51,7 +51,7 @@
           <li class="nav-item active">
             <a class="nav-link" href="{{ route('back.categories.menu') }}">
               <i class="material-icons">category</i>
-              <p>カテゴリ管理</p>
+              <p>カテゴリー管理</p>
             </a>
           </li>
         </ul>

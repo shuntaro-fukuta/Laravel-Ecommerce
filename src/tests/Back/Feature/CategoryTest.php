@@ -45,6 +45,29 @@ class CategoryTest extends TestCase
                  ->assertRedirect($this->loginPagePath);
     }
 
+    /**
+     * @test
+     */
+    public function shouldDisplayCategoryIndexPage()
+    {
+        $response = $this->get('/back/categories');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayCategoryIndexPageWithoutLogin()
+    {
+        $this->logout();
+        $response = $this->get('/back/categories');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+
     protected function logout()
     {
         auth()->logout();
