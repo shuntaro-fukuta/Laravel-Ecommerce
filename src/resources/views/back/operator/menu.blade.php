@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-10 mx-auto d-flex">
         <div class="col-md-6">
-          <a class="text-white" href="{{ route('back.operator.index') }}">
+          <a class="text-white" href="{{ route('back.operators.index') }}">
             <button class="btn btn-dark btn-block">
               担当者一覧
             </button>

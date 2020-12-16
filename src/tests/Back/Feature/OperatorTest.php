@@ -34,7 +34,7 @@ class OperatorTest extends TestCase
      */
     public function shouldDisplayOperatorManagementPage()
     {
-        $response = $this->get('/back/operator/menu');
+        $response = $this->get('/back/operators/menu');
 
         $response->assertStatus(200);
     }
@@ -44,7 +44,7 @@ class OperatorTest extends TestCase
      */
     public function shouldDisplayOperatorIndexPage()
     {
-        $response = $this->get('/back/operator/index');
+        $response = $this->get('/back/operators');
 
         $response->assertStatus(200);
     }
@@ -54,7 +54,7 @@ class OperatorTest extends TestCase
      */
     public function shouldSearchWithValidKeywords()
     {
-        $response = $this->get('/back/operator/index', [
+        $response = $this->get('/back/operators', [
             'name' => 'test',
             'email' => 'test',
         ]);

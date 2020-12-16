@@ -13,6 +13,10 @@ class UserTest extends TestCase
 {
     protected $loggedInUser;
 
+    protected $loginPagePath = '/login';
+
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -25,7 +29,7 @@ class UserTest extends TestCase
      */
     public function shouldDisplayUserPage()
     {
-        $response = $this->get('/user/' . $this->loggedInUser->id);
+        $response = $this->get('/users/' . $this->loggedInUser->id);
 
         $response->assertStatus(200);
     }
@@ -33,11 +37,38 @@ class UserTest extends TestCase
     /**
      * @test
      */
+    public function shouldNotDisplayUserPageWithoutLogin()
+    {
+        $this->logout();
+
+        $response = $this->get('/users/' . $this->loggedInUser->id);
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+
+    /**
+     * @test
+     */
     public function shouldDisplayUserEditPage()
     {
-        $response = $this->get('/user/' . $this->loggedInUser->id . '/edit');
+        $response = $this->get('/users/' . $this->loggedInUser->id . '/edit');
 
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayUserEditPageWithoutLogin()
+    {
+        $this->logout();
+
+        $response = $this->get('/users/' . $this->loggedInUser->id . '/edit');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
     }
 
     /**
@@ -45,7 +76,7 @@ class UserTest extends TestCase
      */
     public function shouldEditUser()
     {
-        $response = $this->post('/user/' . $this->loggedInUser->id . '/edit', [
+        $response = $this->put('/users/' . $this->loggedInUser->id, [
             'name' => 'updated',
             'email' => 'updated@example.com',
             'address' => 'updated',
@@ -65,9 +96,27 @@ class UserTest extends TestCase
     /**
      * @test
      */
+    public function shouldNotEditUserWithoutLogin()
+    {
+        $this->logout();
+
+        $response = $this->put('/users/' . $this->loggedInUser->id, [
+            'name' => 'updated',
+            'email' => 'updated@example.com',
+            'address' => 'updated',
+            'phone_number' => '99999999999',
+        ]);
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    /**
+     * @test
+     */
     public function shouldNotEditOtherUser()
     {
-        $response = $this->post('/user/999/edit', [
+        $response = $this->put('/users/999', [
             'name' => 'updated',
             'email' => 'updated@example.com',
             'address' => 'updated',
@@ -76,5 +125,57 @@ class UserTest extends TestCase
         ]);
 
         $response->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldDisplayWithdrawalConfirmPage()
+    {
+        $response = $this->get('/users/' . $this->loggedInUser->id . '/withdraw');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldDeleteUser()
+    {
+        $response = $this->delete('/users/' . $this->loggedInUser->id);
+
+        $this->assertCount(0, User::all());
+
+        $response->assertStatus(302)
+                 ->assertRedirect('/withdrawal/complete');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayWithdrawalCompletePageWhenLoggedIn()
+    {
+        $response = $this->get('/withdrawal/complete');
+
+        $response->assertStatus(302)
+                 ->assertRedirect('/');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayWithdrawalConfirmPageWithoutLogin()
+    {
+        $this->logout();
+
+        $response = $this->get('/users/' . $this->loggedInUser->id . '/withdraw');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    protected function logout()
+    {
+        auth()->logout();
     }
 }

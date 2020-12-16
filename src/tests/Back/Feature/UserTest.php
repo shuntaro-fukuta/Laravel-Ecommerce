@@ -13,6 +13,8 @@ class UserTest extends TestCase
 {
     protected $loggedInOperator;
 
+    protected $loginPagePath = '/back/login';
+
     use RefreshDatabase;
 
     protected function setUp(): void
@@ -27,9 +29,22 @@ class UserTest extends TestCase
      */
     public function shouldDisplayUserMenuPage()
     {
-        $response = $this->get('/back/user/menu');
+        $response = $this->get('/back/users/menu');
 
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayUserMenuPageWithoutLogIn()
+    {
+        $this->logout();
+
+        $response = $this->get('/back/users/menu');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
     }
 
     /**
@@ -37,7 +52,7 @@ class UserTest extends TestCase
      */
     public function shouldDisplayUserIndexPage()
     {
-        $response = $this->get('/back/user/index');
+        $response = $this->get('/back/users');
 
         $response->assertStatus(200);
     }
@@ -45,9 +60,23 @@ class UserTest extends TestCase
     /**
      * @test
      */
+    public function shouldNotDisplayUserIndexPageWithoutLogIn()
+    {
+        $this->logout();
+
+        $response = $this->get('/back/users');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+
+    /**
+     * @test
+     */
     public function shouldSearchWithValidKeywords()
     {
-        $response = $this->get('/back/user/index', [
+        $response = $this->get('/back/users', [
             'name' => 'test',
             'email' => 'test',
             'phone_number' => 'test',
@@ -64,9 +93,23 @@ class UserTest extends TestCase
     {
         $user = User::factory(1)->create()->first();
 
-        $response = $this->get('back/user/' . $user->id);
+        $response = $this->get('back/users/' . $user->id);
 
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayUserShowPageWithoutLogIn()
+    {
+        $this->logout();
+
+        $user = User::factory(1)->create()->first();
+        $response = $this->get('/back/users/' . $user->id);
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
     }
 
     /**
@@ -74,7 +117,7 @@ class UserTest extends TestCase
      */
     public function shouldDisplayUserCreatePage()
     {
-        $response = $this->get('/back/user/create');
+        $response = $this->get('/back/users/create');
 
         $response->assertStatus(200);
     }
@@ -82,9 +125,22 @@ class UserTest extends TestCase
     /**
      * @test
      */
+    public function shouldNotDisplayUserCreatePageWithoutLogIn()
+    {
+        $this->logout();
+
+        $response = $this->get('/back/users/create');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    /**
+     * @test
+     */
     public function shouldCreateWithValidParameters()
     {
-        $response = $this->post('/back/user/create', [
+        $response = $this->post('/back/users', [
             'name' => 'test',
             'email' => 'test@example.com',
             'phone_number' => '08012341234',
@@ -96,7 +152,27 @@ class UserTest extends TestCase
         $createdUser = User::all()->last();
 
         $response->assertStatus(302)
-                 ->assertRedirect('/back/user/' . $createdUser->id);
+                 ->assertRedirect('/back/users/' . $createdUser->id);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotCreateUserWithoutLogin()
+    {
+        $this->logout();
+
+        $response = $this->post('/back/users', [
+            'name' => 'test',
+            'email' => 'test@example.com',
+            'phone_number' => '08012341234',
+            'address' => 'test',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
     }
 
     /**
@@ -104,7 +180,7 @@ class UserTest extends TestCase
      */
     public function shouldNotCreateUserWithInvalidParameters()
     {
-        $response = $this->post('/back/user/create', [
+        $response = $this->post('/back/users', [
             'name' => str_repeat('a', 31),
             'email' => 'test',
             'phone_number' => 'test',
@@ -123,9 +199,23 @@ class UserTest extends TestCase
     {
         $user = User::factory(1)->create()->first();
 
-        $response = $this->get('/back/user/' . $user->id . '/edit');
+        $response = $this->get('/back/users/' . $user->id . '/edit');
 
         $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayUserEditPageWithoutLogin()
+    {
+        $this->logout();
+
+        $user = User::factory(1)->create()->first();
+        $response = $this->get('/back/users/' . $user->id . '/edit');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
     }
 
     /**
@@ -135,10 +225,28 @@ class UserTest extends TestCase
     {
         $user = User::factory(1)->create()->first();
 
-        $response = $this->delete('/back/user/' . $user->id . '/destroy');
+        $response = $this->delete('/back/users/' . $user->id);
 
         $response->assertStatus(302)
-                 ->assertRedirect('/back/user/index');
+                 ->assertRedirect('/back/users');
     }
 
+    /**
+     * @test
+     */
+    public function shouldNotDeleteUserWithoutLogin()
+    {
+        $this->logout();
+
+        $user = User::factory(1)->create()->first();
+        $response = $this->delete('/back/users/' . $user->id);
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    protected function logout()
+    {
+        auth()->logout();
+    }
 }

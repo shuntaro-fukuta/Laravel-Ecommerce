@@ -49,7 +49,7 @@
             @foreach ($operators as $operator)
               <tr>
                 <td>{{ $operator->id }}</td>
-                <td><a href="{{ route('back.operator.show', $operator) }}">{{ $operator->name }}</a></td>
+                <td><a href="{{ route('back.operators.show', $operator) }}">{{ $operator->name }}</a></td>
                 <td>{{ $operator->email }}</td>
               </tr>
             @endforeach
