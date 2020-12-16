@@ -14,10 +14,15 @@ class CategoryController extends Controller
         return view('back.category.menu');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $name = $request->input('name');
 
-        return view('back.category.index', compact('categories'));
+        $query = Category::query();
+        if (!is_null($name)) $query->where('name', 'LIKE', "%{$name}%");
+
+        $categories = $query->paginate(10);
+
+        return view('back.category.index', compact('categories', 'name'));
     }
 }
