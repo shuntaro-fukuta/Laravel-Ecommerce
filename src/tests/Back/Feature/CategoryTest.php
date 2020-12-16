@@ -93,6 +93,68 @@ class CategoryTest extends TestCase
                  ->assertRedirect($this->loginPagePath);
     }
 
+    /**
+     * @test
+     */
+    public function shouldDisplayCategoryEditPage()
+    {
+        $category = Category::factory(1)->create()->first();
+
+        $response = $this->get('/back/categories/' . $category->id . '/edit');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayCategoryEditPageWithoutLogin()
+    {
+        $this->logout();
+
+        $category = Category::factory(1)->create()->first();
+        $response = $this->get('/back/categories/' . $category->id . '/edit');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldUpdateCategoryWithValidParams()
+    {
+        $category = Category::factory(1)->create()->first();
+
+        $response = $this->put('/back/categories/' . $category->id, [
+            'name' => 'updated',
+        ]);
+
+        $updatedCategory = Category::find($category->id);
+        $this->assertEquals('updated', $updatedCategory->name);
+
+        $response->assertStatus(302)
+                 ->assertRedirect('/back/categories/' . $updatedCategory->id);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotUpdateCategoryWithInvalidParams()
+    {
+        $category = Category::factory(1)->create()->first();
+
+        $response = $this->put('/back/categories/' . $category->id, [
+            'name' => '',
+        ]);
+
+        $afterRequestCategory = Category::find($category->id);
+
+        $this->assertNotEquals($category, $afterRequestCategory);
+
+        $response->assertStatus(302);
+    }
+
 
     protected function logout()
     {

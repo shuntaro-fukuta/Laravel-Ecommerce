@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Back\Category;
+use App\Http\Requests\Back\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -29,5 +30,17 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         return view('back.category.show', compact('category'));
+    }
+
+    public function edit(Category $category)
+    {
+        return view('back.category.edit', compact('category'));
+    }
+
+    public function update(UpdateCategoryRequest $request, Category $category)
+    {
+        $category->fill($request->all())->save();
+
+        return redirect(route('back.categories.show', $category));
     }
 }
