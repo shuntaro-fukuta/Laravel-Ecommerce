@@ -32,6 +32,12 @@
         <td>{{ $maker->address }}</td>
       </tr>
     </table>
+
+    <div class="row text-center">
+      <a href="{{ route('back.makers.edit', $maker) }}">
+        <button class="btn btn-info mb-3">編集</button>
+      </a>
+    </div>
   </div>
 </div>
 @endsection

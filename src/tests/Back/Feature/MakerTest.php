@@ -94,4 +94,18 @@ class MakerTest extends TestCase
         $response->assertStatus(302);
     }
 
+    /**
+     * @test
+     */
+    public function shouldDisplayMakerEditPage()
+    {
+        $maker = Maker::factory(1)->create()->first();
+
+        $response = $this->get('/back/makers/' . $maker->id . '/edit');
+
+        $response->assertStatus(200)
+                 ->assertViewIs('back.maker.edit');
+
+    }
+
 }
