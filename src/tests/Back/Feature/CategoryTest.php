@@ -96,6 +96,83 @@ class CategoryTest extends TestCase
     /**
      * @test
      */
+    public function shouldDisplayCategoryCreatePage()
+    {
+        $response = $this->get('/back/categories/create');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayCategorykCreatePageWithoutLogin()
+    {
+        $this->logout();
+
+        $response = $this->get('/back/categories/create');
+
+        $response->assertStatus(302)
+                 ->assertRedirect('/back/login');
+    }
+
+    /**
+     * @test
+     */
+    public function shouldStoreCategoryWithValidParams()
+    {
+        $this->assertCount(0, Category::all());
+
+        $response = $this->post('/back/categories', [
+            'name' => 'test',
+        ]);
+
+        $this->assertCount(1, Category::all());
+
+        $createdCategory = Category::all()->last();
+
+        $response->assertStatus(302)
+                 ->assertRedirect('/back/categories/' . $createdCategory->id);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotStoreCategoryWithInvalidParams()
+    {
+        $this->assertCount(0, Category::all());
+
+        $response = $this->post('/back/categories', [
+            'name' => '',
+        ]);
+
+        $this->assertCount(0, Category::all());
+
+        $response->assertStatus(302);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotStoreCategoryWithoutLogin()
+    {
+        $this->logout();
+
+        $this->assertCount(0, Category::all());
+
+        $response = $this->post('/back/categories', [
+            'name' => 'test',
+        ]);
+
+        $this->assertCount(0, Category::all());
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    /**
+     * @test
+     */
     public function shouldDisplayCategoryEditPage()
     {
         $category = Category::factory(1)->create()->first();
