@@ -33,7 +33,7 @@
       </div>
     </form>
 
-    <a href="{{ route('back.user.show', $user) }}">
+    <a href="{{ route('back.users.show', $user) }}">
       <button class="btn btn-dark mb-3">戻る</button>
     </a>
   </div>

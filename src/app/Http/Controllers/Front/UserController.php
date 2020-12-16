@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $user->fill($request->all())->save();
 
-        return redirect(route('user.show', $user->id));
+        return redirect(route('users.show', $user->id));
     }
 
     public function confirmWithdraw(User $user)
@@ -33,13 +33,13 @@ class UserController extends Controller
         return view('front.user.confirm_withdraw', ['user' => $user]);
     }
 
-    public function withdraw(User $user)
+    public function destroy(User $user)
     {
         // TODO: 論理削除
         Auth::logout();
         User::destroy($user->id);
 
-        return redirect(route('user.withdrawal.complete'));
+        return redirect(route('users.withdrawal.complete'));
     }
 
     public function completeWithdrawal()

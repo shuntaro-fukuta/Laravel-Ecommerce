@@ -48,14 +48,14 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        $routeNames = [
-            'user' => 'login',
-            'operator' => 'back.operator.login',
-        ];
+        if($request->expectsJson()){
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }
 
-        $guard = $exception->guards()[0];
-        $routeName = (isset($routeNames[$guard])) ? $routeNames[$guard] : 'login';
+        if (in_array('operator', $exception->guards(), true)) {
+            return redirect()->guest(route('back.operators.login'));
+        }
 
-        return route($routeName);
+        return redirect()->guest(route('login'));
     }
 }
