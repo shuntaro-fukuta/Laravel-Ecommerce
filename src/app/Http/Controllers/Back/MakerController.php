@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Back\Maker;
 use App\Http\Requests\Back\CreateMakerRequest;
+use App\Http\Requests\Back\UpdateMakerRequest;
 
 class MakerController extends Controller
 {
@@ -50,5 +51,17 @@ class MakerController extends Controller
     public function show(Maker $maker)
     {
         return view('back.maker.show', compact('maker'));
+    }
+
+    public function edit(Maker $maker)
+    {
+        return view('back.maker.edit', compact('maker'));
+    }
+
+    public function update(UpdateMakerRequest $request, Maker $maker)
+    {
+        $maker->fill($request->all())->save();
+
+        return redirect(route('back.makers.show', $maker));
     }
 }
