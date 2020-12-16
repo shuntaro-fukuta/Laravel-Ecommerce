@@ -29,7 +29,7 @@
             @foreach ($categories as $category)
               <tr>
                 <td>{{ $category->id }}</td>
-                <td><a href="{{-- route('back.categories.show', $category) --}}">{{ $category->name }}</a></td>
+                <td><a href="{{ route('back.categories.show', $category) }}">{{ $category->name }}</a></td>
               </tr>
             @endforeach
           </tbody>

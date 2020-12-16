@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 use App\Models\Back\Operator;
+use App\Models\Back\Category;
 
 class CategoryTest extends TestCase
 {
@@ -62,6 +63,31 @@ class CategoryTest extends TestCase
     {
         $this->logout();
         $response = $this->get('/back/categories');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldDisplayCategoryShowPage()
+    {
+        $category = Category::factory(1)->create()->first();
+        $response = $this->get('/back/categories/' . $category->id);
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayCategoryShowPageWithoutLogin()
+    {
+        $this->logout();
+
+        $category = Category::factory(1)->create()->first();
+        $response = $this->get('/back/categories/' . $category->id);
 
         $response->assertStatus(302)
                  ->assertRedirect($this->loginPagePath);
