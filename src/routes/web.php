@@ -13,11 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('front.top');
-});
-
-Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name('top');
+Route::get('/', function () { return view('front.top'); })->name('top');
+Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
     Route::group(['namespace' => 'Auth\\'], function () {
@@ -28,17 +25,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
         Route::post('/register', 'RegisterController@register');
     });
 
-    Route::group(['middleware' => 'auth', 'prefix' => 'user', 'as' => 'user.', ], function () {
-        Route::group(['middleware' => 'identification'], function () {
-            Route::get('/{user}', 'UserController@show')->name('show');
-
-            Route::get('/{user}/edit', 'UserController@edit')->name('edit');
-            Route::post('/{user}/edit', 'UserController@update');
-
-            Route::get('/{user}/withdraw', 'UserController@confirmWithdraw')->name('withdraw');
-            Route::delete('/{user}/withdraw', 'UserController@withdraw');
+    Route::middleware('auth:user')->group(function () {
+        Route::middleware('identification')->group(function () {
+            Route::resource('users', 'UserController')->only(['show', 'edit', 'update', 'destroy']);
+            Route::get('/users/{user}/withdraw', 'UserController@confirmWithdraw')->name('users.withdraw');
         });
-        Route::get('/withdrawal/complete', 'UserController@completeWithdrawal')->name('withdrawal.complete');
+    });
+
+    Route::middleware('guest:user')->group(function () {
+        Route::get('/withdrawal/complete', 'UserController@completeWithdrawal')->name('users.withdrawal.complete');
     });
 });
 

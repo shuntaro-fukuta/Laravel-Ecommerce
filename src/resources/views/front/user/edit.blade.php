@@ -7,8 +7,9 @@
   <h2 class="text-center my-3">会員情報編集</h2>
 
   <div class="card col-6 mx-auto mt-2">
-    <form method="post">
+    <form action="{{ route('users.update', $user) }}" method="post">
       @csrf
+      @method('PUT')
 
       <div class="row mt-3">
         <div class="col-8 mx-auto d-flex my-2 font-weight-bold">
@@ -72,7 +73,7 @@
     </form>
 
     <div class="row mx-auto my-2">
-      <a class="plain-link" href="{{ route('user.show', $user->id) }}">
+      <a class="plain-link" href="{{ route('users.show', $user->id) }}">
         <button class="btn btn-danger">
           戻る
         </button>
