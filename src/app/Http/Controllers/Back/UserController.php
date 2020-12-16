@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         $user = User::create($request->all());
 
-        return redirect(route('back.user.show', $user));
+        return redirect(route('back.users.show', $user));
     }
 
     public function edit(User $user)
@@ -60,7 +60,7 @@ class UserController extends Controller
     {
         $user->fill($request->all())->save();
 
-        return redirect(route('back.user.show', $user));
+        return redirect(route('back.users.show', $user));
     }
 
     public function destroy(User $user)
@@ -68,6 +68,6 @@ class UserController extends Controller
         // TODO: 論理削除
         User::destroy($user->id);
 
-        return redirect(route('back.user.index'));
+        return redirect(route('back.users.index'));
     }
 }

@@ -6,7 +6,7 @@
 <div class="logo text-center mt-5">Create</div>
 <div class="card col-8 mx-auto">
   <div class="card-body">
-    <form method="post" class="text-left">
+    <form action="{{ route('back.users.store') }}" method="post" class="text-left">
       @csrf
       <div class="form-group my-4 col-9 mx-auto">
         <label class="text-dark font-weight-bold" for="name">Name</label>
