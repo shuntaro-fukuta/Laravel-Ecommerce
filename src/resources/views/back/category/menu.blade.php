@@ -7,6 +7,13 @@
 <div class="card col-8 mx-auto">
   <div class="card-body col-md-11">
     <div class="row">
+      <div class="col-md-6">
+        <a class="text-white" href="{{ route('back.categories.index') }}">
+          <button class="btn btn-dark btn-block">
+            カテゴリー一覧
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 </div>
