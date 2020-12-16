@@ -17,6 +17,12 @@
     </form>
   </div>
 
+  <div class="text-center">
+    <a href="{{ route('back.categories.menu') }}">
+      <button class="btn btn-dark mb-3">戻る</button>
+    </a>
+  </div>
+
   <div class="card col-10 mx-auto">
     <div class="card-body col-11">
       <div class="table-responsive">
@@ -37,5 +43,11 @@
         {{ $categories->appends(request()->input())->links('pagination::bootstrap-4') }}
       </div>
     </div>
+  </div>
+
+  <div class="text-center">
+    <a href="{{ route('back.categories.menu') }}">
+      <button class="btn btn-dark mb-3">戻る</button>
+    </a>
   </div>
 @endsection

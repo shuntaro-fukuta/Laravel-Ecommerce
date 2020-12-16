@@ -14,6 +14,14 @@
           </button>
         </a>
       </div>
+
+      <div class="col-md-6">
+        <a class="text-white" href="{{ route('back.categories.create') }}">
+          <button class="btn btn-dark btn-block">
+            カテゴリー登録
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 </div>
