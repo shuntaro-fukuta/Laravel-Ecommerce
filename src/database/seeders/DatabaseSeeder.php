@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Front\User;
 use App\Models\Back\Operator;
 use App\Models\Back\Maker;
+use App\Models\Back\Category;
 
 class DatabaseSeeder extends Seeder
 {
@@ -40,5 +41,8 @@ class DatabaseSeeder extends Seeder
             'address' => '東京都八王子市hoge',
         ]);
         Maker::factory(10)->create();
+
+        Category::create(['name' => 'fukuta']);
+        Category::factory(10)->create();
     }
 }
