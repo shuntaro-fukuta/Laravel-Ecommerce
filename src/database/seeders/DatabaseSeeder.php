@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Front\User;
 use App\Models\Back\Operator;
+use App\Models\Back\Maker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,5 +32,13 @@ class DatabaseSeeder extends Seeder
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
         ]);
         Operator::factory(100)->create();
+
+        Maker::create([
+            'name' => '株式会社福田',
+            'email' => 'fukuta_co@example.com',
+            'phone_number' => '0312341234',
+            'address' => '東京都八王子市hoge',
+        ]);
+        Maker::factory(10)->create();
     }
 }
