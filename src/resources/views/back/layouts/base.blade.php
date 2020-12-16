@@ -31,13 +31,13 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item active">
-            <a class="nav-link" href="{{ route('back.operator.menu') }}">
+            <a class="nav-link" href="{{ route('back.operators.menu') }}">
               <i class="material-icons">person</i>
               <p>担当者管理</p>
             </a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{{ route('back.user.menu') }}">
+            <a class="nav-link" href="{{ route('back.users.menu') }}">
               <i class="material-icons">person</i>
               <p>ユーザー管理</p>
             </a>

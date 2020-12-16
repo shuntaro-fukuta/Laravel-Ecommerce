@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-10 mx-auto d-flex">
         <div class="col-md-6">
-          <a class="text-white" href="{{ route('back.user.index') }}">
+          <a class="text-white" href="{{ route('back.users.index') }}">
             <button class="btn btn-dark btn-block">
               ユーザー一覧
             </button>
@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-md-6">
-          <a class="text-white" href="{{ route('back.user.create') }}">
+          <a class="text-white" href="{{ route('back.users.create') }}">
             <button class="btn btn-dark btn-block">
               ユーザー登録
             </button>
