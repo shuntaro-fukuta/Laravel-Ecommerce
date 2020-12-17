@@ -54,6 +54,12 @@
               <p>カテゴリー管理</p>
             </a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ route('back.products.menu') }}">
+              <i class="material-icons">local_grocery_store</i>
+              <p>商品管理</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
