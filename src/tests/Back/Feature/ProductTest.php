@@ -44,6 +44,29 @@ class ProductTest extends TestCase
                  ->assertRedirect($this->loginPagePath);
     }
 
+    /**
+     * @test
+     */
+    public function shouldDisplayProductIndexPage()
+    {
+        $response = $this->get('/back/products');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayProductIndexPageWithoutLogin()
+    {
+        $this->logout();
+
+        $response = $this->get('/back/products');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
     protected function logout()
     {
         auth()->logout();

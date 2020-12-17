@@ -15,6 +15,7 @@ class Product extends Model
         'maker_id',
         'name',
         'price',
+        'image_url',
         'description',
         'is_published',
     ];

@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->foreignId('maker_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('price');
+            $table->string('image_url')->nullable();
             $table->string('description')->nullable();
             $table->boolean('is_published')->default(true);
             $table->timestamps();

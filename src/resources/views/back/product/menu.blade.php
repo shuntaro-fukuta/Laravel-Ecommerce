@@ -9,7 +9,7 @@
     <div class="row">
       <div class="col-10 mx-auto d-flex">
         <div class="col-md-6">
-          <a class="text-white" href="{{-- route('back.products.index') --}}">
+          <a class="text-white" href="{{ route('back.products.index') }}">
             <button class="btn btn-dark btn-block">
               商品一覧
             </button>

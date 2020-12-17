@@ -59,6 +59,6 @@ Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 
         Route::resource('categories', 'CategoryController')->only(['index', 'show', 'create', 'store', 'edit', 'update']);
 
         Route::get('/products/menu', 'ProductController@menu')->name('products.menu');
-        Route::resource('products');
+        Route::resource('products', 'ProductController');
     });
 });
