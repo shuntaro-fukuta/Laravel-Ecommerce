@@ -7,6 +7,7 @@ use App\Models\Front\User;
 use App\Models\Back\Operator;
 use App\Models\Back\Maker;
 use App\Models\Back\Category;
+use App\Models\Back\Product;
 
 class DatabaseSeeder extends Seeder
 {
@@ -44,5 +45,7 @@ class DatabaseSeeder extends Seeder
 
         Category::create(['name' => 'fukuta']);
         Category::factory(10)->create();
+
+        Product::factory(30)->create();
     }
 }
