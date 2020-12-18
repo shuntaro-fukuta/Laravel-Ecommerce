@@ -105,10 +105,10 @@ class ProductTest extends TestCase
         $response = $this->post('/back/products', [
             'category_id' => $category->id,
             'maker_id' => $maker->id,
-            'name' => 'test',
-            'price' => 2000,
-            'image_url' => 'https://example.com',
-            'description' => 'test',
+            'name' => 'valid',
+            'price' => 1000,
+            'image_url' => 'https://valid.example.com',
+            'description' => 'valid',
             'is_published' => true,
         ]);
 
@@ -139,6 +139,144 @@ class ProductTest extends TestCase
         $response->assertStatus(302);
     }
 
+    /**
+     * @test
+     */
+    public function shouldDisplayProductEditPage()
+    {
+        $product = Product::factory(1)->create()->first();
+        $response = $this->get('/back/products/' . $product->id . '/edit');
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotDisplayProductEditPageWithoutLogin()
+    {
+        $this->logout();
+
+        $product = Product::factory(1)->create()->first();
+        $response = $this->get('/back/products/' . $product->id . '/edit');
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldUpdateProductWithValidParams()
+    {
+        $category = Category::factory(1)->create()->first();
+        $maker = Maker::factory(1)->create()->first();
+        $beforeRequestProduct = Product::create([
+            'jan_code' => '1234567890123',
+            'category_id' => $category->id,
+            'maker_id' => $maker->id,
+            'name' => 'before',
+            'price' => 1000,
+            'image_url' => 'https://before.example.com',
+            'description' => 'before',
+            'is_published' => false,
+        ]);
+
+        $response = $this->put('/back/products/' . $beforeRequestProduct->id, [
+            'category_id' => $category->id,
+            'maker_id' => $maker->id,
+            'name' => 'updated',
+            'price' => 0,
+            'image_url' => 'https://updated.example.com',
+            'description' => 'updated',
+            'is_published' => true,
+        ]);
+
+        $updatedProduct = Product::find($beforeRequestProduct->id);
+        $this->assertEquals('updated', $updatedProduct->name);
+        $this->assertEquals(0, $updatedProduct->price);
+        $this->assertEquals('https://updated.example.com', $updatedProduct->image_url);
+        $this->assertEquals('updated', $updatedProduct->description);
+        $this->assertEquals(true, $updatedProduct->is_published);
+
+        $response->assertStatus(302);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldNotUpdateProductWithInvalidParams()
+    {
+        $category = Category::factory(1)->create()->first();
+        $maker = Maker::factory(1)->create()->first();
+        $product = Product::create([
+            'jan_code' => '0123456890123',
+            'category_id' => $category->id,
+            'maker_id' => $maker->id,
+            'name' => 'before',
+            'price' => 1000,
+            'image_url' => 'https://before.example.com',
+            'description' => 'before',
+            'is_published' => true,
+        ]);
+
+        $response = $this->put('/back/products/' . $product->id, [
+            'category_id' => 0,
+            'maker_id' => 0,
+            'name' => '',
+            'price' => -1,
+            'image_url' => 'hoge',
+            'description' => '',
+            'is_published' => 'hoge',
+        ]);
+
+        $this->assertEquals('before', $product->name);
+        $this->assertEquals(1000, $product->price);
+        $this->assertEquals('https://before.example.com', $product->image_url);
+        $this->assertEquals('before', $product->description);
+
+        $response->assertStatus(302);
+    }
+
+    protected function getValidParamsForCreate(int $category_id, int $maker_id)
+    {
+        return [
+            'jan_code' => '1234567890123',
+            'category_id' => $category_id,
+            'maker_id' => $maker_id,
+            'name' => 'valid',
+            'price' => 1000,
+            'image_url' => 'https://valid.example.com',
+            'description' => 'valid',
+            'is_published' => true,
+        ];
+    }
+
+    protected function getValidParamsForUpdate(int $category_id, int $maker_id)
+    {
+        return [
+            'category_id' => $category_id,
+            'maker_id' => $maker_id,
+            'name' => 'valid',
+            'price' => 1000,
+            'image_url' => 'https://valid.example.com',
+            'description' => 'valid',
+            'is_published' => true,
+        ];
+    }
+
+    protected function getInvalidParams()
+    {
+        return [
+            'category_id' => 0,
+            'maker_id' => 0,
+            'name' => '',
+            'price' => -1,
+            'image_url' => 'hoge',
+            'description' => '',
+            'is_published' => 'hoge',
+        ];
+    }
 
     protected function logout()
     {

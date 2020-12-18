@@ -39,7 +39,7 @@
     </table>
 
     <div class="row text-center">
-      <a href="{{ route('back.products.show', $product) }}">
+      <a href="{{ route('back.products.edit', $product) }}">
         <button class="btn btn-info mb-3">編集</button>
       </a>
     </div>

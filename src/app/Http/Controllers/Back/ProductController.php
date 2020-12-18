@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Back\CreateProductRequest;
+use App\Http\Requests\Back\UpdateProductRequest;
 use App\Models\Back\Product;
 use App\Models\Back\Category;
 use App\Models\Back\Maker;
@@ -29,7 +30,6 @@ class ProductController extends Controller
         if (!is_null($description)) $query->where('description', 'LIKE', "%{$description}%");
 
         $products = $query->paginate(10);
-
 
         return view('back.product.index', compact(
             'products',
@@ -60,6 +60,21 @@ class ProductController extends Controller
         // TODO: きちんとJanの採番
         $jan_code = sprintf('%013d', mt_rand(0, 9999999999999));
         $product = Product::create(array_merge($request->all(), ['jan_code' => $jan_code]));
+
+        return redirect(route('back.products.show', $product));
+    }
+
+    public function edit(Product $product)
+    {
+        $categories = Category::all();
+        $makers = Maker::all();
+
+        return view('back.product.edit', compact('product', 'categories', 'makers'));
+    }
+
+    public function update(UpdateProductRequest $request, Product $product)
+    {
+        $product->fill($request->all())->save();
 
         return redirect(route('back.products.show', $product));
     }
