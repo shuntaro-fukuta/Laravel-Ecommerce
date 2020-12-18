@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Back;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\Back\CreateProductRequest;
 use App\Models\Back\Product;
+use App\Models\Back\Category;
+use App\Models\Back\Maker;
 
 class ProductController extends Controller
 {
@@ -27,11 +30,37 @@ class ProductController extends Controller
 
         $products = $query->paginate(10);
 
+
         return view('back.product.index', compact(
             'products',
             'jan_code',
             'name',
             'description',
         ));
+    }
+
+    public function show(Product $product)
+    {
+        return view('back.product.show', compact('product'));
+    }
+
+    public function create()
+    {
+        $categories = Category::all();
+        $makers = Maker::all();
+
+        return view('back.product.create', compact(
+            'makers',
+            'categories',
+        ));
+    }
+
+    public function store(CreateProductRequest $request)
+    {
+        // TODO: きちんとJanの採番
+        $jan_code = sprintf('%013d', mt_rand(0, 9999999999999));
+        $product = Product::create(array_merge($request->all(), ['jan_code' => $jan_code]));
+
+        return redirect(route('back.products.show', $product));
     }
 }

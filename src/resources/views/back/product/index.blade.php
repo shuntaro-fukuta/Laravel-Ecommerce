@@ -43,7 +43,7 @@
             @foreach ($products as $product)
               <tr>
                 <td>{{ $product->id }}</td>
-                <td><a href="{{-- route('back.products.show', $product) --}}">{{ $product->jan_code }}</a></td>
+                <td><a href="{{ route('back.products.show', $product) }}">{{ $product->jan_code }}</a></td>
                 <td>{{ $product->name }}</a></td>
                 <td>￥{{ number_format($product->price) }}</td>
                 <td>{{ $product->is_published ? '公開' : '非公開' }}</td>
