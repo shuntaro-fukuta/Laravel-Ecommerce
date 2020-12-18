@@ -78,4 +78,11 @@ class ProductController extends Controller
 
         return redirect(route('back.products.show', $product));
     }
+
+    public function destroy(Product $product)
+    {
+        Product::destroy($product->id);
+
+        return redirect(route('back.products.index'));
+    }
 }

@@ -42,7 +42,17 @@
       <a href="{{ route('back.products.edit', $product) }}">
         <button class="btn btn-info mb-3">編集</button>
       </a>
+
+      <form action="{{ route('back.products.destroy', $product) }}" method="post">
+        @csrf
+        @method('DELETE')
+        <button class="btn btn-danger mb-3">削除</button>
+      </form>
     </div>
+
+    <a href="{{ route('back.products.index') }}">
+      <button class="btn btn-dark mb-3">戻る</button>
+    </a>
   </div>
 </div>
 @endsection

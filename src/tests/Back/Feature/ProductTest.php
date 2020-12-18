@@ -238,44 +238,32 @@ class ProductTest extends TestCase
         $response->assertStatus(302);
     }
 
-    protected function getValidParamsForCreate(int $category_id, int $maker_id)
+    /**
+     * @test
+     */
+    public function shouldDeleteProduct()
     {
-        return [
-            'jan_code' => '1234567890123',
-            'category_id' => $category_id,
-            'maker_id' => $maker_id,
-            'name' => 'valid',
-            'price' => 1000,
-            'image_url' => 'https://valid.example.com',
-            'description' => 'valid',
-            'is_published' => true,
-        ];
-    }
+        $product = Product::factory(1)->create()->first();
 
-    protected function getValidParamsForUpdate(int $category_id, int $maker_id)
-    {
-        return [
-            'category_id' => $category_id,
-            'maker_id' => $maker_id,
-            'name' => 'valid',
-            'price' => 1000,
-            'image_url' => 'https://valid.example.com',
-            'description' => 'valid',
-            'is_published' => true,
-        ];
-    }
+        $response = $this->delete('/back/products/' . $product->id);
+        $this->assertNull(Product::find($product->id));
 
-    protected function getInvalidParams()
+        $response->assertStatus(302)
+                 ->assertRedirect('/back/products');
+    }
+    /**
+     * @test
+     */
+    public function shouldNotDeleteProductWithoutLogin()
     {
-        return [
-            'category_id' => 0,
-            'maker_id' => 0,
-            'name' => '',
-            'price' => -1,
-            'image_url' => 'hoge',
-            'description' => '',
-            'is_published' => 'hoge',
-        ];
+        $product = Product::factory(1)->create()->first();
+        $this->logout();
+
+        $response = $this->delete('/back/products/' . $product->id);
+        $this->assertNotNull(Product::find($product->id));
+
+        $response->assertStatus(302)
+                 ->assertRedirect($this->loginPagePath);
     }
 
     protected function logout()
