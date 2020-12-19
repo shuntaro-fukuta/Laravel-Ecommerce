@@ -25,6 +25,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
         Route::post('/register', 'RegisterController@register');
     });
 
+    Route::get('/products/{product}', 'ProductController@show')->name('products.show');
+
     Route::middleware('auth:user')->group(function () {
         Route::middleware('identification')->group(function () {
             Route::resource('users', 'UserController')->only(['show', 'edit', 'update', 'destroy']);

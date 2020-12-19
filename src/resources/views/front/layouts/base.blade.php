@@ -11,8 +11,23 @@
 <body>
 @include('front.layouts.header')
 
-@yield('content')
+<!-- side bar -->
+<div class="row">
+  <div class="col-2 bd-sidebar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav flex-column">
+          @foreach ($categories as $category)
+            <li class="nav-item">{{ $category->name }}</li>
+          @endforeach
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  @yield('content')
+</div>
 
 @include('front.layouts.footer')
-</body>
+</div
 </html>
