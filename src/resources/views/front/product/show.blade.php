@@ -21,7 +21,7 @@
       </div>
 
       <div class="row">
-        <div class="col-9 mx-auto">
+        <div class="col-9 mx-auto mt-3">
           <!-- TODO: メーカー名表示 -->
           <p>メーカー:{{ $product->maker }}</p>
           <span>{{ $product->description }}</span>

@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title')</title>
 
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
@@ -18,7 +22,13 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav flex-column">
           @foreach ($categories as $category)
-            <li class="nav-item">{{ $category->name }}</li>
+            @if (isset($searched_category_id) && $category->id == $searched_category_id)
+              <a class="text-success" href="{{ route('top') }}?category_id={{ $category->id }}">
+            @else
+              <a class="text-dark" href="{{ route('top') }}?category_id={{ $category->id }}">
+            @endif
+              <li class="nav-item">{{ $category->name }}</li>
+            </a>
           @endforeach
         </ul>
       </div>

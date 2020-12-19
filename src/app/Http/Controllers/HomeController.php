@@ -9,12 +9,17 @@ use App\Models\Back\Category;
 
 class HomeController extends Controller
 {
-    public function top()
+    public function top(Request $request)
     {
-        $products = Product::paginate(20);
+        $searched_category_id = $request->input('category_id');
+
+        $query = Product::query();
+        if (!is_null($searched_category_id)) $query->where('category_id', $searched_category_id);
+        $products = $query->paginate(20);
+
         $categories = Category::all();
 
-        return view('front.top', compact('products', 'categories'));
+        return view('front.top', compact('products', 'categories', 'searched_category_id'));
     }
 
     public function index()
