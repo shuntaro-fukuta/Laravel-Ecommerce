@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="col-10">
-  @foreach ($products->chunk(4) as $chunk)
+  @forelse ($products->chunk(4) as $chunk)
     <div class="row my-3">
       @foreach ($chunk as $product)
         @if ($product->is_published)
@@ -25,6 +25,8 @@
         @endif
       @endforeach
     </div>
-  @endforeach
+  @empty
+    <h2 class="text-center mt-5">商品はまだありません</h2>
+  @endforelse
 {{ $products->links('pagination::bootstrap-4') }}
 @stop
