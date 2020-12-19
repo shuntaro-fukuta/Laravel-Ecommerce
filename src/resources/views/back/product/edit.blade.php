@@ -71,10 +71,10 @@
         <label class="text-dark font-weight-bold">公開区分</label>
         <br>
         <label class="text-dark font-weight-bold" for="not_published">非公開</label>
-        <input type="radio" id="not_published" name="is_published" value="0" @if ($product->is_published) checked @endif>
+        <input type="radio" id="not_published" name="is_published" value="0" @if (!$product->is_published) checked @endif>
         &nbsp; &nbsp;
         <label class="text-dark font-weight-bold" for="published">公開</label>
-        <input type="radio" id="published" name="is_published" value="1" @if (!$product->is_published) checked @endif>
+        <input type="radio" id="published" name="is_published" value="1" @if ($product->is_published) checked @endif>
         @if($errors->has('is_published'))
           <p class="text-danger">{{ $errors->first('is_published') }}</p>
         @endif
