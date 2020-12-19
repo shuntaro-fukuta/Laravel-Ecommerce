@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('front.top'); })->name('top');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'top'])->name('top');
 Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {

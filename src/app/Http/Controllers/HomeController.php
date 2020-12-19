@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Back\Product;
+
 class HomeController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    public function top()
+    {
+        $products = Product::paginate(20);
+
+        return view('front.top', compact('products'));
+    }
+
     public function index()
     {
-        return view('front.top');
+        $products = Product::all();
+
+        return view('front.top', compact('products'));
     }
 }
