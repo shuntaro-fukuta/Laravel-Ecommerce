@@ -29,6 +29,7 @@ class ProductFactory extends Factory
             'maker_id' => Maker::factory(1)->create()->first()->id,
             'name' => $this->faker->lexify('Item???#'),
             'price' => $this->faker->numberBetween(100, 100000),
+            'image_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Square_200x200.svg/200px-Square_200x200.svg.png',
             'description' => $this->faker->realText(20),
             'is_published' => ($this->faker->numberBetween(0, 2)) ? true : false,
         ];

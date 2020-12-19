@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a href="/" class="navbar-brand">Laravel-Ecommerce</a>
+  <a href="/" class="navbar-brand text-success">
+    Laravel-Ecommerce <i class="material-icons">store</i>
+  </a>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
       @guest

@@ -4,12 +4,15 @@ namespace Tests\Unit\Back;
 
 
 use App\Http\Requests\Back\CreateMakerRequest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Validator;
 
 use Tests\TestCase;
 
 class CreateMakerRequestTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @param array カラム名の配列
      * @param array 入力値の配列
