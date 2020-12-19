@@ -123,7 +123,7 @@ class DatabaseSeeder extends Seeder
                 'maker_id' => 2,
                 'name' => 'ディスプレイ',
                 'price' => 13000,
-                'image_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Square_200x200.svg/200px-Square_200x200.svg.png',
+                'image_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/27/Square_200x200.svg/200px-Square_200x200.svg.png',
                 'description' => '画面サイズ:23型ワイド/解像度:1920×1080 フルHD/パネル:IPS/表面仕様:ノングレア/バックライト:LED。入力端子:HDMI, D-Sub 15ピン/入力端子:3.5mmステレオミニジャック。 ',
                 'is_published' => true,
             ],

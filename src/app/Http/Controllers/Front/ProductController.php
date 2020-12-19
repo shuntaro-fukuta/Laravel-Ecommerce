@@ -12,6 +12,8 @@ class ProductController extends Controller
 {
     public function show(Product $product)
     {
+        $products = Product::with(['maker', 'category'])->get();
+
         $categories = Category::all();
 
         return view('front.product.show', compact('product', 'categories'));

@@ -12,4 +12,9 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function product()
+    {
+        $this->hasOne('App\Models\Back\Product');
+    }
 }

@@ -19,4 +19,14 @@ class Product extends Model
         'description',
         'is_published',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Back\Category');
+    }
+
+    public function maker()
+    {
+        return $this->belongsTo('App\Models\Back\Maker');
+    }
 }

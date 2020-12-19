@@ -20,4 +20,9 @@ class Maker extends Model
         'phone_number',
         'address',
     ];
+
+    public function product()
+    {
+        return $this->hasOne('App\Back\Models\Product');
+    }
 }
