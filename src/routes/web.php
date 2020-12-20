@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('front.top'); })->name('top');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'top'])->name('top');
 Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
@@ -24,6 +24,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
         Route::get('/register', 'RegisterController@showRegistrationForm')->name('register');
         Route::post('/register', 'RegisterController@register');
     });
+
+    Route::get('/products/{product}', 'ProductController@show')->name('products.show');
 
     Route::middleware('auth:user')->group(function () {
         Route::middleware('identification')->group(function () {
@@ -54,5 +56,11 @@ Route::group(['prefix' => 'back', 'namespace' => 'App\Http\Controllers\Back\\', 
 
         Route::resource('makers', 'MakerController');
         Route::get('/maker/menu', 'MakerController@menu')->name('makers.menu');
+
+        Route::get('/categories/menu', 'CategoryController@menu')->name('categories.menu');
+        Route::resource('categories', 'CategoryController')->only(['index', 'show', 'create', 'store', 'edit', 'update']);
+
+        Route::get('/products/menu', 'ProductController@menu')->name('products.menu');
+        Route::resource('products', 'ProductController');
     });
 });
