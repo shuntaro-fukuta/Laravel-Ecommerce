@@ -15,7 +15,15 @@
           <h4>{{ $product->name }}</h4>
           <h4>￥{{ number_format($product->price) }}</h4>
 
-          <button class="btn btn-lg btn-success">買い物かごへ入れる</button>
+          <form action="{{ route('cart.add') }}" method="post">
+            @csrf
+            <input type="hidden" name="name" value="{{ $product->name }}">
+            <input type="hidden" name="janCode" value="{{ $product->jan_code }}">
+            <input type="hidden" name="price" value="{{ $product->price }}">
+            <input type="hidden" name="image_url" value="{{ $product->image_url}}">
+            <input class="col-4 mb-2" type="text" name="quantity" maxlength="2">個
+            <button type="submit" class="btn btn-lg btn-success">買い物かごへ入れる</button>
+          </form>
           <button class="mt-2 btn btn-sm btn-info text-white">欲しい物リストへ追加</button>
         </div>
       </div>

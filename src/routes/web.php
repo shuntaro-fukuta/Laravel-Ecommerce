@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [App\Http\Controllers\HomeController::class, 'top'])->name('top');
 Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::post('/cart', [App\Http\Controllers\Front\CartController::class, 'add'])->name('cart.add');
+Route::get('/cart', [App\Http\Controllers\Front\CartController::class, 'show'])->name('cart.show');
+
 Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
     Route::group(['namespace' => 'Auth\\'], function () {
         Route::get('/login', 'LoginController@showLoginForm')->name('login');

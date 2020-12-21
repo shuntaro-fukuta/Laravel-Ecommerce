@@ -28,6 +28,11 @@
           </li>
         @endif
       @endguest
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ route('cart.show') }}">
+          <i class="material-icons">local_grocery_store</i>
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

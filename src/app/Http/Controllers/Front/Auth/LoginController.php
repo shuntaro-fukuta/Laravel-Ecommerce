@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Back\Category;
+
 class LoginController extends Controller
 {
     /*
@@ -46,7 +48,8 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('front.auth.login');
+        $categories = Category::all();
+        return view('front.auth.login', compact('categories'));
     }
 
     /**
