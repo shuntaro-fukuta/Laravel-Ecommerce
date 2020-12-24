@@ -4,14 +4,12 @@
 
 @section('content')
 
-<h1>カートの中身</h1>
 <div class="mx-auto col-8">
 <h1>カート</h1>
-  <div id="app" class="card">
-    @foreach ($products as $janCode => $item)
-    <div class="col-12 mx-auto">
-      <div class="row">
-        <div class="col-4">
+  <div id="app" class="card col-8 mx-auto">
+    @forelse ($products as $janCode => $item)
+      <div class="row mt-4">
+        <div class="col-5">
           <img src="{{ $item->getImageUrl() }}" alt="">
         </div>
         <div class="">
@@ -28,11 +26,13 @@
             <button class="btn btn-primary" type="button" @click="increment({{ $janCode }})">+</button>
           </div>
         </div>
-      </div>
-    </div>
-    @endforeach
 
-    <div class="btn btn-secondary col-2 mx-auto mb-3">
+      </div>
+    @empty
+      <p class="text-center">カートに商品はありません</p>
+    @endforelse
+
+    <div class="btn btn-secondary col-4 mx-auto my-3">
       購入手続きへ
     </div>
   </div>
