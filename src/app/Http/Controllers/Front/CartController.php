@@ -28,8 +28,22 @@ class CartController extends Controller
 
     public function show()
     {
-        $cartHandler = new CartHandler();
+        $products = CartHandler::getContents();
         $categories = Category::all();
-        return view('front.cart.index', compact('cartHandler', 'categories'));
+        return view('front.cart.index', compact('products', 'categories'));
+    }
+
+    public function incrementQuantity(Request $request, String $janCode)
+    {
+        $quantity = CartHandler::incrementQuantity($janCode, $request->input('quantity'));
+
+        return ['quantity' => $quantity];
+    }
+
+    public function decrementQuantity(Request $request, String $janCode)
+    {
+        $quantity = CartHandler::decrementQuantity($janCode, $request->input('quantity'));
+
+        return ['quantity' => $quantity];
     }
 }

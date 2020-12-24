@@ -22,12 +22,12 @@ class CartHandler
         $this->saveCartToSession($cart);
     }
 
-    public function update(String $janCode, CartProduct $product)
+    public static function update(String $janCode, CartProduct $product)
     {
-        $cart = $this->getCart();
+        $cart = self::getCart();
         if ($cart->has($janCode)) {
             $cart->put($janCode, $product);
-            $this->saveCartToSession($cart);
+            self::saveCartToSession($cart);
         }
     }
 
@@ -41,15 +41,45 @@ class CartHandler
         return $cart;
     }
 
-    public function getContentByJanCode(String $janCode)
+    public static function incrementQuantity(String $janCode, int $quantity)
     {
-        $cart = $this->getCart();
+        $cart = self::getCart();
+        if ($cart->has($janCode)) {
+            $product = $cart->get($janCode);
+
+            $quantity += 1;
+            $product->setQuantity($quantity);
+
+            self::update($janCode, $product);
+
+            return $quantity;
+        }
+    }
+
+    public static function decrementQuantity(String $janCode, int $quantity)
+    {
+        $cart = self::getCart();
+        if ($cart->has($janCode)) {
+            $product = $cart->get($janCode);
+
+            $quantity -= 1;
+            $product->setQuantity($quantity);
+
+            self::update($janCode, $product);
+
+            return $quantity;
+        }
+    }
+
+    public static function getContentByJanCode(String $janCode)
+    {
+        $cart = self::getCart();
         return $cart->get($janCode);
     }
 
-    public function getTotalAmountIncludingTax()
+    public static function getTotalAmountIncludingTax()
     {
-        $cart = $this->getCart();
+        $cart = self::getCart();
 
         $totalAmount = $cart->reduce(function ($sum, $product) {
             $unitPriceIncludingTax = $product->getUnitPrice() * CartProduct::SALES_TAX_RATE;
@@ -60,26 +90,26 @@ class CartHandler
         return $totalAmount;
     }
 
-    public function getContents()
+    public static function getContents()
     {
         return session()->has(self::SESSION_CART_NAME)
             ? session()->get(self::SESSION_CART_NAME)
             : new Collection();
     }
 
-    private function getCart()
+    private static function getCart()
     {
-        return $this->existsCartOnSession()
+        return self::existsCartOnSession()
             ? session()->get(self::SESSION_CART_NAME)
             : new Collection();
     }
 
-    private function existsCartOnSession()
+    private static function existsCartOnSession()
     {
         return session()->has(self::SESSION_CART_NAME);
     }
 
-    private function saveCartToSession(Collection $cart)
+    private static function saveCartToSession(Collection $cart)
     {
         session()->put(self::SESSION_CART_NAME, $cart);
     }

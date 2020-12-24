@@ -6,12 +6,12 @@
 <div class="col-7 mx-auto">
   <div class="card mt-4">
     <div class="item my-4">
-      <div class="row ml-5">
+      <div class="row ml-5 mt-3">
         <div class="col-4 ml-5">
           <img src="{{ $product->image_url }}" alt="">
         </div>
 
-        <div class="col-4 mt-5">
+        <div id="app" class="col-4">
           <h4>{{ $product->name }}</h4>
           <h4>￥{{ number_format($product->price) }}</h4>
 
@@ -21,8 +21,23 @@
             <input type="hidden" name="janCode" value="{{ $product->jan_code }}">
             <input type="hidden" name="price" value="{{ $product->price }}">
             <input type="hidden" name="image_url" value="{{ $product->image_url}}">
-            <input class="col-4 mb-2" type="text" name="quantity" maxlength="2">個
-            <button type="submit" class="btn btn-lg btn-success">買い物かごへ入れる</button>
+
+            <div>
+              数量：
+              <button class="btn btn-danger" type="button" @click="decrement({{ $product->jan_code }})">-</button>
+              <input id="quantity_{{ $product->jan_code }}"
+                     name="quantity"
+                     class="col-3"
+                     type="text"
+                     maxlength="2"
+                     value="1">
+              <button class="btn btn-primary" type="button" @click="increment({{ $product->jan_code }})">+</button>
+
+              <p>
+                <small>※一度に注文できるのは20点までです</small>
+              </p>
+            </div>
+            <button type="submit" class="btn btn-lg mt-1 btn-success">買い物かごへ入れる</button>
           </form>
           <button class="mt-2 btn btn-sm btn-info text-white">欲しい物リストへ追加</button>
         </div>
@@ -38,4 +53,26 @@
     </div>
   </div>
 </div>
+
+<script>
+new Vue({
+    el: '#app',
+    methods: {
+      increment(janCode) {
+        quantityInput = document.getElementById('quantity_' + janCode);
+        quantity = Number(quantityInput.value);
+        if (quantity < 20) {
+          quantityInput.value = quantity + 1;
+        }
+      },
+      decrement(janCode) {
+        quantityInput = document.getElementById('quantity_' + janCode);
+        quantity = Number(quantityInput.value);
+        if (quantity > 1) {
+          quantityInput.value = quantity - 1;
+        }
+      }
+    }
+})
+</script>
 @endsection

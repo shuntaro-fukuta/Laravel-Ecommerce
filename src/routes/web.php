@@ -18,6 +18,8 @@ Route::get('/top', [App\Http\Controllers\HomeController::class, 'index'])->name(
 
 Route::post('/cart', [App\Http\Controllers\Front\CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [App\Http\Controllers\Front\CartController::class, 'show'])->name('cart.show');
+Route::post('/carts/{janCode}/increment', [App\Http\Controllers\Front\CartController::class, 'incrementQuantity'])->name('cart.incrementQuantity');
+Route::post('/carts/{janCode}/decrement', [App\Http\Controllers\Front\CartController::class, 'decrementQuantity'])->name('cart.decrementQuantity');
 
 Route::group(['namespace' => 'App\Http\Controllers\Front\\'], function () {
     Route::group(['namespace' => 'Auth\\'], function () {
