@@ -33,6 +33,16 @@ class CartController extends Controller
         return view('front.cart.index', compact('products', 'categories'));
     }
 
+    public function delete(String $janCode)
+    {
+        CartHandler::remove($janCode);
+
+        $products = CartHandler::getContents();
+        $categories = Category::all();
+
+        return view('front.cart.index', compact('products', 'categories'));
+    }
+
     public function incrementQuantity(Request $request, String $janCode)
     {
         $quantity = CartHandler::incrementQuantity($janCode, $request->input('quantity'));

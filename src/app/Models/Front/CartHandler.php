@@ -31,9 +31,9 @@ class CartHandler
         }
     }
 
-    public function remove(String $janCode)
+    public static function remove(String $janCode)
     {
-        $cart = $this->getCart();
+        $cart = self::getCart();
         if ($cart->has($janCode)) {
             $cart->pull($janCode);
         }

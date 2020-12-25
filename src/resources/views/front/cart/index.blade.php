@@ -8,7 +8,7 @@
 <h1>カート</h1>
   <div id="app" class="card col-8 mx-auto">
     @forelse ($products as $janCode => $item)
-      <div class="row mt-4">
+      <div class="row mt-2">
         <div class="col-5">
           <img src="{{ $item->getImageUrl() }}" alt="">
         </div>
@@ -25,17 +25,25 @@
                    value="{{ $item->getQuantity() }}" >
             <button class="btn btn-primary" type="button" @click="increment({{ $janCode }})">+</button>
           </div>
-        </div>
 
+          <form action="{{ route('cart.delete', $janCode) }}" method="post">
+            @csrf
+            @method('DELETE')
+            <input type="submit" value="削除">
+          </form>
+        </div>
       </div>
     @empty
       <p class="text-center">カートに商品はありません</p>
     @endforelse
 
+    @if (!$products->isEmpty())
     <div class="btn btn-secondary col-4 mx-auto my-3">
       購入手続きへ
     </div>
+    @endif
   </div>
+
 </div>
 
 <script>
