@@ -7,18 +7,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Front\User;
+use App\Models\Back\Category;
 use App\Http\Requests\Front\UpdateUserRequest;
 
 class UserController extends Controller
 {
     public function show(User $user)
     {
-        return view('front.user.show', ['user' => $user]);
+        $categories = Category::all();
+        return view('front.user.show', compact('user', 'categories'));
     }
 
     public function edit(User $user)
     {
-        return view('front.user.edit', ['user' => $user]);
+        $categories = Category::all();
+        return view('front.user.edit', compact('user', 'categories'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -30,7 +33,8 @@ class UserController extends Controller
 
     public function confirmWithdraw(User $user)
     {
-        return view('front.user.confirm_withdraw', ['user' => $user]);
+        $categories = Category::all();
+        return view('front.user.confirm_withdraw', compact('user', 'categories'));
     }
 
     public function destroy(User $user)

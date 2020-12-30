@@ -11,7 +11,10 @@
 
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-</head>
+
+  {{-- TODO: 他に良い読み込み方がありそう --}}
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script></head>
 <body>
 @include('front.layouts.header')
 

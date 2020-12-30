@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Back\Category;
+
 class RegisterController extends Controller
 {
     /*
@@ -48,7 +50,8 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm()
     {
-        return view('front.auth.register');
+        $categories = Category::all();
+        return view('front.auth.register', compact('categories'));
     }
 
     /**
