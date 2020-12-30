@@ -17,10 +17,7 @@
 
           <form action="{{ route('cart.add') }}" method="post">
             @csrf
-            <input type="hidden" name="name" value="{{ $product->name }}">
-            <input type="hidden" name="janCode" value="{{ $product->jan_code }}">
-            <input type="hidden" name="price" value="{{ $product->price }}">
-            <input type="hidden" name="image_url" value="{{ $product->image_url}}">
+            <input type="hidden" name="jan_code" value="{{ $product->jan_code }}">
 
             <div>
               数量：

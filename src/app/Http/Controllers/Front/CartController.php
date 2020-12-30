@@ -8,20 +8,24 @@ use Illuminate\Http\Request;
 use App\Models\Front\CartHandler;
 use App\Models\Front\CartProduct;
 use App\Models\Back\Category;
+use App\Models\Back\Product;
 
 class CartController extends Controller
 {
     public function add(Request $request)
     {
+        $janCode = $request->input('jan_code');
+        $product = Product::where('jan_code', $janCode)->first();
+
         $cartHandler = new CartHandler();
         $product = new CartProduct(
-            $request->input('name'),
+            $product->name,
             $request->input('quantity'),
-            $request->input('price'),
-            $request->input('image_url'),
+            $product->price,
+            $product->image_url,
         );
 
-        $cartHandler->add($request->input('janCode'), $product);
+        $cartHandler->add($janCode, $product);
 
         return redirect(route('cart.show'));
     }
